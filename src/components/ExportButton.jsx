@@ -1,11 +1,12 @@
 import React from 'react';
 import { calcLogIndex } from '../data/pricing.js';
 
-function ExportButton({ groups, values, costs, billingType, priceLevel, logIndexes = [] }) {
+function ExportButton({ groups, values, costs, billingType, priceLevel, logIndexes = [], customerName = '' }) {
   const handleExport = () => {
     const today = new Date();
     const dateLabel = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     const dateFilename = today.toISOString().slice(0, 10);
+    const slug = customerName ? `-${customerName.toLowerCase().replace(/\s+/g, '-')}` : '';
 
     const billingLabel = billingType === 'annual' ? 'Annual' : 'M2M';
     const priceLevelLabel = { rep: 'Rep', manager: 'Manager', director: 'Director' }[priceLevel] ?? priceLevel;
@@ -18,7 +19,7 @@ function ExportButton({ groups, values, costs, billingType, priceLevel, logIndex
     const row = (cells) => cells.map(esc).join(',');
 
     const lines = [];
-    lines.push(row([`Datadog Pricing Estimate — Generated ${dateLabel}`]));
+    lines.push(row([customerName ? `${customerName} — Datadog Pricing Estimate — ${dateLabel}` : `Datadog Pricing Estimate — Generated ${dateLabel}`]));
     lines.push(row([`Billing Type: ${billingLabel} | Price Level: ${priceLevelLabel}`]));
     lines.push('');
     lines.push(row(['Product Group', 'SKU', 'Quantity', 'Unit', 'Monthly Cost ($)', 'Annual Cost ($)']));
@@ -56,7 +57,7 @@ function ExportButton({ groups, values, costs, billingType, priceLevel, logIndex
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', `datadog-pricing-estimate-${dateFilename}.csv`);
+    link.setAttribute('download', `datadog-pricing-estimate${slug}-${dateFilename}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

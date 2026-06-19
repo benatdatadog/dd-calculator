@@ -137,6 +137,8 @@ const Header = ({
   showPricing,
   onReveal,
   onHide,
+  onCopyLink,
+  copied,
 }) => {
   return (
     <header style={styles.header}>
@@ -159,6 +161,13 @@ const Header = ({
           value={priceLevel}
           onChange={onPriceLevelChange}
         />
+        <button
+          style={styles.revealBtn}
+          onClick={onCopyLink}
+          title="Copy a shareable link to this estimate"
+        >
+          {copied ? "✓ Copied!" : "Share"}
+        </button>
         <button style={styles.revealBtn} onClick={showPricing ? onHide : onReveal}>
           {showPricing ? "Hide Pricing" : "Reveal Pricing"}
         </button>

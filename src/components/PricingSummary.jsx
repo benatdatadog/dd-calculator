@@ -31,7 +31,7 @@ function formatCurrency(amount) {
   }).format(amount);
 }
 
-function PricingSummary({ groups, costs, showPricing, onReveal, onHide, billingType, priceLevel, values = {}, logIndexes = [] }) {
+function PricingSummary({ groups, costs, showPricing, onReveal, onHide, billingType, priceLevel, values = {}, logIndexes = [], customerName = '' }) {
   // Compute total monthly cost
   const totalMonthly = Object.values(costs).reduce((sum, v) => sum + (v || 0), 0);
   const totalAnnual = totalMonthly * 12;
@@ -269,6 +269,7 @@ function PricingSummary({ groups, costs, showPricing, onReveal, onHide, billingT
             billingType={billingType}
             priceLevel={priceLevel}
             logIndexes={logIndexes}
+            customerName={customerName}
           />
         </div>
 
