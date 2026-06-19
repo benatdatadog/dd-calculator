@@ -39,7 +39,7 @@ const FLEX_COMPUTE = {
 
 // ─── Persistence helpers ──────────────────────────────────────────────────────
 
-const LS_KEY = 'dd-calc-v1'
+const LS_KEY = 'dd-calc-v3'
 
 const SKIP_PARAMS = new Set(['customer', 'billing', 'level', 'idx'])
 

@@ -7,8 +7,8 @@ const PURPLE = '#632CA6';
 const LockIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="22"
-    height="22"
+    width="15"
+    height="15"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -44,12 +44,12 @@ function PricingSummary({ groups, costs, showPricing, onReveal, onHide, billingT
           position: 'sticky',
           bottom: 0,
           zIndex: 200,
-          background: 'linear-gradient(to top, rgba(255,255,255,1) 70%, rgba(255,255,255,0))',
-          padding: '32px 24px 28px',
+          background: 'linear-gradient(to top, rgba(255,255,255,1) 60%, rgba(255,255,255,0))',
+          padding: '20px 24px 16px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '10px',
+          gap: '6px',
           pointerEvents: 'none',
         }}
       >
@@ -59,16 +59,16 @@ function PricingSummary({ groups, costs, showPricing, onReveal, onHide, billingT
             pointerEvents: 'all',
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '10px',
-            padding: '16px 40px',
-            fontSize: '18px',
-            fontWeight: 700,
+            gap: '8px',
+            padding: '9px 24px',
+            fontSize: '14px',
+            fontWeight: 600,
             color: '#fff',
             background: PURPLE,
             border: 'none',
-            borderRadius: '12px',
+            borderRadius: '8px',
             cursor: 'pointer',
-            boxShadow: '0 4px 20px rgba(99,44,166,0.45)',
+            boxShadow: '0 2px 12px rgba(99,44,166,0.35)',
             transition: 'opacity 0.15s, transform 0.1s',
           }}
           onMouseEnter={(e) => {
@@ -87,11 +87,11 @@ function PricingSummary({ groups, costs, showPricing, onReveal, onHide, billingT
           style={{
             pointerEvents: 'none',
             margin: 0,
-            fontSize: '13px',
-            color: '#888',
+            fontSize: '11px',
+            color: '#aaa',
           }}
         >
-          Click to reveal estimated pricing
+          Prices hidden
         </p>
       </div>
     );
