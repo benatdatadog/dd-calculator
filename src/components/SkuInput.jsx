@@ -23,7 +23,7 @@ export default function SkuInput({ sku, value, onChange, monthlyCost, showPricin
   }
 
   function handleChange(e) {
-    onChange(id, e.target.value);
+    onChange(e.target.value);
   }
 
   function renderPrice() {
