@@ -8,6 +8,29 @@ function formatCurrency(n) {
 export default function SkuInput({ sku, value, onChange, monthlyCost, showPricing, extras }) {
   const { id, label, unit, inputType, options, placeholder, tooltip, pricingNote } = sku;
 
+  // Computed (read-only display): derived from other inputs, no user entry
+  if (inputType === 'computed') {
+    if (!monthlyCost || monthlyCost <= 0) return null;
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px solid #f0f0f0' }}>
+        <div style={{ flexGrow: 1, minWidth: 200 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            <span style={{ fontWeight: 500 }}>{label}</span>
+            {tooltip && <Tooltip text={tooltip} />}
+          </div>
+        </div>
+        <div style={{ width: 160 }} />
+        <div style={{ width: 120, color: '#6b6b6b', fontSize: 13 }}>{unit}</div>
+        <div
+          style={{ width: 140, textAlign: 'right', fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}
+          className={!showPricing ? 'blurred' : undefined}
+        >
+          {formatCurrency(monthlyCost)}
+        </div>
+      </div>
+    );
+  }
+
   // Log index table: special multi-row UI
   if (inputType === 'log-index-table') {
     return (

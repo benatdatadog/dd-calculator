@@ -161,6 +161,13 @@ export const PRODUCT_GROUPS = [
           'Flex Logs requires a reserved compute tier that determines query throughput. Extra Small ~$10K/mo, Small ~$35K/mo, Medium ~$75K/mo, Large ~$150K/mo (Annual rates).',
       },
       {
+        id: 'flexLogsCompute',
+        label: 'Flex Logs Compute',
+        inputType: 'computed',
+        unit: 'flat rate',
+        tooltip: 'Platform fee for the selected Flex Logs compute tier. Calculated automatically from the tier selection above.',
+      },
+      {
         id: 'archiveGB',
         label: 'Log Archive (Cold Storage)',
         unit: 'GB/month',
@@ -274,13 +281,13 @@ export const PRODUCT_GROUPS = [
     color: '#6F42C1',
     skus: [
       {
-        id: 'rumSessions',
-        label: 'RUM Sessions',
+        id: 'rumMeasure',
+        label: 'RUM Measure',
         unit: 'per 1K sessions/month',
         inputType: 'number',
         placeholder: '0',
         tooltip:
-          'A RUM session starts when a user visits your app and ends after 15 minutes of inactivity or 4 hours total. Page views, actions, and errors within a session are not counted separately — only the session itself.',
+          'RUM Measure captures all user sessions for performance and error metrics. A session starts on visit and ends after 15 minutes of inactivity or 4 hours total. Priced at $0.15 per 1K sessions (Annual).',
       },
       {
         id: 'rumReplay',

@@ -145,7 +145,7 @@ function calculateCosts(values, billingType, logIndexes) {
   costs.cnmHosts   = calcTiered(+v.cnmHosts || 0,   TIERS.CNM_ANNUAL)
   costs.ndmDevices = calcTiered(+v.ndmDevices || 0,  NDM_ANNUAL)
 
-  costs.rumSessions   = calcTiered(+v.rumSessions || 0,   TIERS.RUM_SESSIONS_ANNUAL)
+  costs.rumMeasure    = calcTiered(+v.rumMeasure || 0,    TIERS.RUM_MEASURE_ANNUAL)
   costs.rumReplay     = calcTiered(+v.rumReplay || 0,     TIERS.RUM_SESSION_REPLAY_ANNUAL)
   costs.rumInvestigate= calcTiered(+v.rumInvestigate || 0,TIERS.RUM_INVESTIGATE_BUNDLE_ANNUAL)
 

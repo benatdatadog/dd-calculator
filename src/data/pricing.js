@@ -304,18 +304,31 @@ const CNM_ANNUAL = [
 // ---------------------------------------------------------------------------
 // TIERS: RUM
 // ---------------------------------------------------------------------------
-const RUM_SESSIONS_ANNUAL = [
-  { max: 24999, rate: 1.50 },
-  { max: 49999, rate: 1.50 },
-  { max: 74999, rate: 1.41 },
-  { max: 99999, rate: 1.21 },
-  { max: Infinity, rate: 0.98 },
+// RUM Measure: $0.15/1K sessions (Annual Rep), replaces legacy RUM Sessions
+const RUM_MEASURE_ANNUAL = [
+  { max: 24999,   rate: 0.150 },
+  { max: 49999,   rate: 0.120 },
+  { max: 99999,   rate: 0.100 },
+  { max: 249999,  rate: 0.083 },
+  { max: 499999,  rate: 0.072 },
+  { max: 999999,  rate: 0.065 },
+  { max: Infinity, rate: 0.060 },
 ];
 
+// Session Replay: $2.50/1K sessions (Annual Rep)
 const RUM_SESSION_REPLAY_ANNUAL = [
-  { max: 24999, rate: 1.50 },
-  { max: 49999, rate: 1.50 },
-  { max: Infinity, rate: 1.21 },
+  { max: 999,     rate: 2.50 },
+  { max: 1999,    rate: 2.35 },
+  { max: 3999,    rate: 2.20 },
+  { max: 7999,    rate: 2.04 },
+  { max: 13999,   rate: 1.88 },
+  { max: 19999,   rate: 1.72 },
+  { max: 34999,   rate: 1.56 },
+  { max: 49999,   rate: 1.40 },
+  { max: 74999,   rate: 1.25 },
+  { max: 99999,   rate: 1.09 },
+  { max: 249999,  rate: 0.94 },
+  { max: Infinity, rate: 0.75 },
 ];
 
 const RUM_INVESTIGATE_BUNDLE_ANNUAL = [
@@ -573,7 +586,7 @@ export const PRICING = {
   cnm_annual:                 { tiers: CNM_ANNUAL,              billingType: 'annual', level: 'rep',      unit: 'host/month',   description: 'Cloud Network Monitoring (Annual)' },
 
   // RUM
-  rum_sessions_annual:        { tiers: RUM_SESSIONS_ANNUAL,     billingType: 'annual', level: 'rep',      unit: 'per 1K sessions', description: 'RUM Sessions (Annual)' },
+  rum_measure_annual:         { tiers: RUM_MEASURE_ANNUAL,      billingType: 'annual', level: 'rep',      unit: 'per 1K sessions', description: 'RUM Measure (Annual)' },
   rum_session_replay_annual:  { tiers: RUM_SESSION_REPLAY_ANNUAL, billingType: 'annual', level: 'rep',    unit: 'per 1K replays', description: 'RUM Session Replay (Annual)' },
   rum_investigate_annual:     { tiers: RUM_INVESTIGATE_BUNDLE_ANNUAL, billingType: 'annual', level: 'rep', unit: 'per 1K',      description: 'RUM Investigate Bundle (Annual)' },
 
@@ -711,7 +724,7 @@ export const TIERS = {
   SYNTHETICS_BROWSER_ANNUAL,
   SYNTHETICS_MOBILE_ANNUAL,
   CNM_ANNUAL,
-  RUM_SESSIONS_ANNUAL,
+  RUM_MEASURE_ANNUAL,
   RUM_SESSION_REPLAY_ANNUAL,
   RUM_INVESTIGATE_BUNDLE_ANNUAL,
   SERVERLESS_FUNCTIONS_ANNUAL,
