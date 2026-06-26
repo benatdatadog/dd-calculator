@@ -89,11 +89,22 @@ function saveLS(state) {
   try { localStorage.setItem(LS_KEY, JSON.stringify(state)) } catch { /* quota */ }
 }
 
+function migrateValues(values) {
+  if (!values) return values
+  const v = { ...values }
+  // rumSessions → rumMeasure (renamed in pricing update)
+  if (v.rumSessions !== undefined && v.rumMeasure === undefined) {
+    v.rumMeasure = v.rumSessions
+    delete v.rumSessions
+  }
+  return v
+}
+
 function getInitial() {
   const fromURL = decodeParams(window.location.search)
-  if (fromURL) return fromURL
+  if (fromURL) return { ...fromURL, values: migrateValues(fromURL.values) }
   const fromLS = loadLS()
-  if (fromLS) return fromLS
+  if (fromLS) return { ...fromLS, values: migrateValues(fromLS.values) }
   return { customerName: '', billingType: 'annual', priceLevel: 'rep', values: {}, logIndexes: [{ id: 1, name: '', events: '', retention: 15 }] }
 }
 
