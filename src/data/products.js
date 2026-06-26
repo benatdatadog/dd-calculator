@@ -152,9 +152,9 @@ export const PRODUCT_GROUPS = [
         inputType: 'select',
         options: [
           { value: 'xs', label: 'Extra Small' },
-          { value: 'sm', label: 'Small' },
-          { value: 'md', label: 'Medium' },
-          { value: 'lg', label: 'Large' },
+          { value: 'small', label: 'Small' },
+          { value: 'medium', label: 'Medium' },
+          { value: 'large', label: 'Large' },
         ],
         placeholder: 'Extra Small',
         tooltip:

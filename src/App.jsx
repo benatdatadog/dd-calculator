@@ -134,8 +134,9 @@ function calculateCosts(values, billingType, logIndexes) {
   costs.logsForwarding = (+v.logsForwarding || 0) * FLAT_RATES.logForwardingPerGB
 
   const siemM = +v.cloudSIEM || 0
-  costs.cloudSIEM_ingest = siemM * FLAT_RATES.logIngestPerGB
-  costs.cloudSIEM_index  = siemM > 0 ? calcSKU('cloud_siem', siemM) : 0
+  costs.cloudSIEM = siemM > 0
+    ? siemM * FLAT_RATES.logIngestPerGB + calcSKU('cloud_siem', siemM)
+    : 0
 
   costs.synthAPI    = calcTiered(+v.synthAPI || 0,     TIERS.SYNTHETICS_API_ANNUAL)
   costs.synthBrowser= calcTiered(+v.synthBrowser || 0, TIERS.SYNTHETICS_BROWSER_ANNUAL)
