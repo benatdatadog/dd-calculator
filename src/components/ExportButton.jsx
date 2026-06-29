@@ -50,13 +50,13 @@ function ExportButton({ groups, values, costs, billingType, priceLevel, logIndex
       }
     }
 
-    // Flex Logs Compute is a flat platform fee tied to flexLogsGB but stored under
-    // a separate costs key — export it explicitly since no SKU id maps to it.
+    // Flex Logs Compute is a flat platform fee with inputType='computed' so values[id]
+    // is undefined — export it explicitly since the standard loop skips computed SKUs.
     if ((costs.flexLogsCompute || 0) > 0) {
       const tierLabels = { xs: 'Extra Small', small: 'Small', medium: 'Medium', large: 'Large' };
       const tierLabel = tierLabels[values.flexLogsTier] ?? (values.flexLogsTier || 'Medium');
       totalMonthly += costs.flexLogsCompute;
-      lines.push(row(['Log Management', `Flex Logs Compute (${tierLabel})`, '-', 'flat rate/month', costs.flexLogsCompute.toFixed(2), (costs.flexLogsCompute * 12).toFixed(2)]));
+      lines.push(row(['Flex Logs', `Compute (${tierLabel})`, '-', 'flat rate/month', costs.flexLogsCompute.toFixed(2), (costs.flexLogsCompute * 12).toFixed(2)]));
     }
 
     lines.push('');

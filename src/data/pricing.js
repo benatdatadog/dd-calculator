@@ -523,8 +523,10 @@ export const FLAT_RATES = {
   logIngestedSpansPerGB: 0.10,    // per GB ingested spans
   logForwardingPerGB: 0.25,       // per GB forwarded
 
-  // Flex Logs
-  flexLogsStoragePerMillionGBMonth: 0.05, // per million GB stored/month (Annual)
+  // Flex Logs Starter (storage + compute bundled)
+  flexStarterStoragePerM: 0.60,           // per million events stored/month
+  // Flex Logs (scalable compute, storage separate)
+  flexLogsStoragePerM: 0.05,              // per million events stored/month
   flexLogsComputeExtraSmall: 10000,       // per month (Annual)
   flexLogsComputeSmall: 35000,
   flexLogsComputeMedium: 75000,

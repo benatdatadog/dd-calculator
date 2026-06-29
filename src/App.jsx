@@ -136,13 +136,20 @@ function calculateCosts(values, billingType, logIndexes) {
   costs.logIndexes     = (logIndexes || []).reduce(
     (sum, idx) => sum + calcLogIndex(+idx.events || 0, +idx.retention || 15, billingType), 0
   )
-  costs.flexLogsGB     = (+v.flexLogsGB || 0) * FLAT_RATES.logIngestPerGB
-  costs.flexLogsCompute= (+v.flexLogsGB || 0) > 0
-    ? (FLEX_COMPUTE[v.flexLogsTier || 'medium']?.[billingType] ?? FLEX_COMPUTE.medium.annual)
-    : 0
   costs.archiveGB      = 0
   costs.rehydration    = (+v.archiveGB || 0) * ((+v.rehydrationPct || 7.5) / 100) * FLAT_RATES.archiveRehydrationPerGB
   costs.logsForwarding = (+v.logsForwarding || 0) * FLAT_RATES.logForwardingPerGB
+
+  // Flex Logs Starter
+  costs.flexStarterIngestGB = (+v.flexStarterIngestGB || 0) * FLAT_RATES.logIngestPerGB
+  costs.flexStarterEventsM  = (+v.flexStarterEventsM || 0) * FLAT_RATES.flexStarterStoragePerM
+
+  // Flex Logs (scalable compute)
+  costs.flexLogsGB      = (+v.flexLogsGB || 0) * FLAT_RATES.logIngestPerGB
+  costs.flexLogsEventsM = (+v.flexLogsEventsM || 0) * FLAT_RATES.flexLogsStoragePerM
+  costs.flexLogsCompute = (+v.flexLogsEventsM || 0) > 0
+    ? (FLEX_COMPUTE[v.flexLogsTier || 'medium']?.[billingType] ?? FLEX_COMPUTE.medium.annual)
+    : 0
 
   const siemM = +v.cloudSIEM || 0
   costs.cloudSIEM = siemM > 0

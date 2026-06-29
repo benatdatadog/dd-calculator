@@ -137,37 +137,6 @@ export const PRODUCT_GROUPS = [
         tooltip: '',
       },
       {
-        id: 'flexLogsGB',
-        label: 'Flex Logs (Ingest)',
-        unit: 'GB/month',
-        inputType: 'number',
-        placeholder: '0',
-        tooltip:
-          "Flex Logs is Datadog's warm tier: cheaper than standard indexes, still interactively queryable without rehydration. A fixed compute tier must be provisioned separately. All Flex data also incurs the standard $0.10/GB ingest charge.",
-      },
-      {
-        id: 'flexLogsTier',
-        label: 'Flex Logs Compute Tier',
-        unit: 'tier',
-        inputType: 'select',
-        options: [
-          { value: 'xs', label: 'Extra Small' },
-          { value: 'small', label: 'Small' },
-          { value: 'medium', label: 'Medium' },
-          { value: 'large', label: 'Large' },
-        ],
-        placeholder: 'Extra Small',
-        tooltip:
-          'Flex Logs requires a reserved compute tier that determines query throughput. Extra Small ~$10K/mo, Small ~$35K/mo, Medium ~$75K/mo, Large ~$150K/mo (Annual rates).',
-      },
-      {
-        id: 'flexLogsCompute',
-        label: 'Flex Logs Compute',
-        inputType: 'computed',
-        unit: 'flat rate',
-        tooltip: 'Platform fee for the selected Flex Logs compute tier. Calculated automatically from the tier selection above.',
-      },
-      {
         id: 'archiveGB',
         label: 'Log Archive (Cold Storage)',
         unit: 'GB/month',
@@ -193,6 +162,79 @@ export const PRODUCT_GROUPS = [
         placeholder: '0',
         tooltip:
           'Logs forwarded from Datadog to a third-party SIEM or storage. Charged at $0.25/GB in addition to ingest. Does not apply to logs sent to Datadog Archives.',
+      },
+    ],
+  },
+  {
+    id: 'flexStarter',
+    label: 'Flex Logs Starter',
+    icon: '🗂️',
+    color: '#0099CC',
+    skus: [
+      {
+        id: 'flexStarterIngestGB',
+        label: 'Ingest',
+        unit: 'GB/month',
+        inputType: 'number',
+        placeholder: '0',
+        tooltip:
+          'Log bytes ingested into Datadog. Charged at $0.10/GB. Flex Starter is suited for customers ingesting less than ~1TB/day or storing less than 10B events cumulatively.',
+      },
+      {
+        id: 'flexStarterEventsM',
+        label: 'Retained Events',
+        unit: 'M events (steady-state)',
+        inputType: 'number',
+        placeholder: '0',
+        tooltip:
+          'Total events stored in Flex Starter at steady state = (monthly ingest in M events) × (retention months). Retention options: 3, 6, 12, or 15 months. Priced at $0.60/M events/month — bundles storage and compute, no separate compute needed.',
+      },
+    ],
+  },
+  {
+    id: 'flexLogs',
+    label: 'Flex Logs',
+    icon: '📂',
+    color: '#006699',
+    skus: [
+      {
+        id: 'flexLogsGB',
+        label: 'Ingest',
+        unit: 'GB/month',
+        inputType: 'number',
+        placeholder: '0',
+        tooltip:
+          'Log bytes ingested into Datadog. Charged at $0.10/GB. Flex Logs (scalable compute) is suited for customers ingesting 1TB+/day or storing more than 10B events.',
+      },
+      {
+        id: 'flexLogsEventsM',
+        label: 'Storage',
+        unit: 'M events (steady-state)',
+        inputType: 'number',
+        placeholder: '0',
+        tooltip:
+          'Total events stored in Flex Logs at steady state = (monthly ingest in M events) × (retention months). Retention options: 30–450 days or 1–15 months. Priced at $0.05/M events/month. Compute tier must also be selected.',
+      },
+      {
+        id: 'flexLogsTier',
+        label: 'Compute Tier',
+        unit: 'tier',
+        inputType: 'select',
+        options: [
+          { value: 'xs', label: 'Extra Small (~$10K/mo)' },
+          { value: 'small', label: 'Small (~$35K/mo)' },
+          { value: 'medium', label: 'Medium (~$75K/mo)' },
+          { value: 'large', label: 'Large (~$150K/mo)' },
+        ],
+        tooltip:
+          'Reserved compute tier for querying Flex Logs. XS: up to 50B events stored; S: up to 200B; M: up to 1T; L: up to 5T. Each tier is ~2× the capacity of the previous.',
+      },
+      {
+        id: 'flexLogsCompute',
+        label: 'Compute',
+        inputType: 'computed',
+        unit: 'flat rate',
+        tooltip: 'Flat monthly fee for the selected compute tier. Calculated automatically when storage is configured.',
       },
     ],
   },
