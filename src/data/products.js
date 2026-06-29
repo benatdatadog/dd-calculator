@@ -182,12 +182,26 @@ export const PRODUCT_GROUPS = [
       },
       {
         id: 'flexStarterEventsM',
-        label: 'Retained Events',
-        unit: 'M events (steady-state)',
+        label: 'Monthly Events',
+        unit: 'M events/month',
         inputType: 'number',
         placeholder: '0',
         tooltip:
-          'Total events stored in Flex Starter at steady state = (monthly ingest in M events) × (retention months). Retention options: 3, 6, 12, or 15 months. Priced at $0.60/M events/month — bundles storage and compute, no separate compute needed.',
+          'Monthly log volume flowing into Flex Starter. Combined with retention, this determines total events stored. Priced at $0.60/M events stored/month — bundles storage and compute, no separate compute needed.',
+      },
+      {
+        id: 'flexStarterRetention',
+        label: 'Retention Period',
+        unit: 'months',
+        inputType: 'select',
+        options: [
+          { value: '3',  label: '3 months' },
+          { value: '6',  label: '6 months' },
+          { value: '12', label: '12 months' },
+          { value: '15', label: '15 months' },
+        ],
+        tooltip:
+          'How long logs are retained in Flex Starter. Total stored = monthly events × retention months. Minimum retention is 3 months.',
       },
     ],
   },
@@ -208,12 +222,28 @@ export const PRODUCT_GROUPS = [
       },
       {
         id: 'flexLogsEventsM',
-        label: 'Storage',
-        unit: 'M events (steady-state)',
+        label: 'Monthly Events',
+        unit: 'M events/month',
         inputType: 'number',
         placeholder: '0',
         tooltip:
-          'Total events stored in Flex Logs at steady state = (monthly ingest in M events) × (retention months). Retention options: 30–450 days or 1–15 months. Priced at $0.05/M events/month. Compute tier must also be selected.',
+          'Monthly log volume flowing into Flex Logs. Combined with retention, this determines total events stored. Priced at $0.05/M events stored/month. Compute tier must also be selected.',
+      },
+      {
+        id: 'flexLogsRetention',
+        label: 'Retention Period',
+        unit: 'months',
+        inputType: 'select',
+        options: [
+          { value: '1',  label: '1 month' },
+          { value: '2',  label: '2 months' },
+          { value: '3',  label: '3 months' },
+          { value: '6',  label: '6 months' },
+          { value: '12', label: '12 months' },
+          { value: '15', label: '15 months' },
+        ],
+        tooltip:
+          'How long logs are retained in Flex Logs. Total stored = monthly events × retention months. Options: 1–15 months (equivalent to 30–450 days).',
       },
       {
         id: 'flexLogsTier',

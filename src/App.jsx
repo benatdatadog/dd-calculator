@@ -142,11 +142,11 @@ function calculateCosts(values, billingType, logIndexes) {
 
   // Flex Logs Starter
   costs.flexStarterIngestGB = (+v.flexStarterIngestGB || 0) * FLAT_RATES.logIngestPerGB
-  costs.flexStarterEventsM  = (+v.flexStarterEventsM || 0) * FLAT_RATES.flexStarterStoragePerM
+  costs.flexStarterEventsM  = (+v.flexStarterEventsM || 0) * (+v.flexStarterRetention || 3) * FLAT_RATES.flexStarterStoragePerM
 
   // Flex Logs (scalable compute)
   costs.flexLogsGB      = (+v.flexLogsGB || 0) * FLAT_RATES.logIngestPerGB
-  costs.flexLogsEventsM = (+v.flexLogsEventsM || 0) * FLAT_RATES.flexLogsStoragePerM
+  costs.flexLogsEventsM = (+v.flexLogsEventsM || 0) * (+v.flexLogsRetention || 3) * FLAT_RATES.flexLogsStoragePerM
   costs.flexLogsCompute = (+v.flexLogsEventsM || 0) > 0
     ? (FLEX_COMPUTE[v.flexLogsTier || 'medium']?.[billingType] ?? FLEX_COMPUTE.medium.annual)
     : 0
