@@ -130,6 +130,27 @@ export const PRODUCT_GROUPS = [
           'All log bytes received by Datadog regardless of what happens next. 1 GB = approximately 1–5 million log events depending on event size. Compressed bytes on the wire are measured.',
       },
       {
+        id: 'logsIngestFlexPct',
+        label: '% Routed to Flex',
+        unit: '% of ingest',
+        inputType: 'select',
+        options: [
+          { value: '',    label: '— none' },
+          { value: '10',  label: '10%' },
+          { value: '20',  label: '20%' },
+          { value: '30',  label: '30%' },
+          { value: '40',  label: '40%' },
+          { value: '50',  label: '50%' },
+          { value: '60',  label: '60%' },
+          { value: '70',  label: '70%' },
+          { value: '80',  label: '80%' },
+          { value: '90',  label: '90%' },
+          { value: '100', label: '100%' },
+        ],
+        tooltip:
+          'Percentage of log ingest routed to Flex Logs. Selecting a value auto-fills the Monthly Events field in Flex Logs Starter (1 GB ≈ 1 M events).',
+      },
+      {
         id: 'logIndexes',
         label: 'Log Indexes (Standard)',
         inputType: 'log-index-table',
@@ -179,6 +200,27 @@ export const PRODUCT_GROUPS = [
         placeholder: '0',
         tooltip:
           'Log bytes ingested into Datadog. Charged at $0.10/GB. Flex Starter is suited for customers ingesting less than ~1TB/day or storing less than 10B events cumulatively.',
+      },
+      {
+        id: 'flexStarterFlexPct',
+        label: '% of Log Ingest Retained',
+        unit: '% of ingest',
+        inputType: 'select',
+        options: [
+          { value: '',    label: '— none' },
+          { value: '10',  label: '10%' },
+          { value: '20',  label: '20%' },
+          { value: '30',  label: '30%' },
+          { value: '40',  label: '40%' },
+          { value: '50',  label: '50%' },
+          { value: '60',  label: '60%' },
+          { value: '70',  label: '70%' },
+          { value: '80',  label: '80%' },
+          { value: '90',  label: '90%' },
+          { value: '100', label: '100%' },
+        ],
+        tooltip:
+          'Percentage of total log ingest (from Log Management) to retain in Flex Starter. Selecting a value auto-fills Monthly Events (1 GB ≈ 1 M events). You can still edit Monthly Events manually.',
       },
       {
         id: 'flexStarterEventsM',

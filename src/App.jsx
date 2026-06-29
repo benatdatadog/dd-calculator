@@ -228,7 +228,21 @@ export default function App() {
   }, [customerName])
 
   const handleChange = useCallback((skuId, value) => {
-    setValues(prev => ({ ...prev, [skuId]: value }))
+    setValues(prev => {
+      const next = { ...prev, [skuId]: value }
+
+      // Auto-fill Flex Starter monthly events: logsIngestGB × chosen pct (1 GB ≈ 1 M events)
+      const AUTO_FILL_TRIGGERS = new Set(['logsIngestGB', 'logsIngestFlexPct', 'flexStarterFlexPct'])
+      if (AUTO_FILL_TRIGGERS.has(skuId)) {
+        const gb  = skuId === 'logsIngestGB'      ? +value : +prev.logsIngestGB      || 0
+        const pct = skuId === 'logsIngestFlexPct' ? +value
+                  : skuId === 'flexStarterFlexPct' ? +value
+                  : +prev.flexStarterFlexPct || +prev.logsIngestFlexPct || 0
+        if (gb > 0 && pct > 0) next.flexStarterEventsM = String(Math.round(gb * pct / 100))
+      }
+
+      return next
+    })
   }, [])
 
   const handleAddLogIndex = useCallback(() => {
