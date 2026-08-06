@@ -140,6 +140,8 @@ const Header = ({
   onCopyLink,
   copied,
   onReset,
+  ap2,
+  onAp2Change,
 }) => {
   const [confirming, setConfirming] = useState(false)
   const cancelTimer = useRef(null)
@@ -176,6 +178,18 @@ const Header = ({
           value={priceLevel}
           onChange={onPriceLevelChange}
         />
+        <button
+          style={{
+            ...styles.revealBtn,
+            backgroundColor: ap2 ? "#fff" : "transparent",
+            color: ap2 ? PURPLE : "#fff",
+            fontWeight: ap2 ? 700 : 500,
+          }}
+          onClick={() => onAp2Change(!ap2)}
+          title="Apply 1.20× AP2 (Australia / UK) pricing"
+        >
+          AP2
+        </button>
         <button
           style={styles.revealBtn}
           onClick={onCopyLink}

@@ -41,13 +41,14 @@ const FLEX_COMPUTE = {
 
 const LS_KEY = 'dd-calc-v3'
 
-const SKIP_PARAMS = new Set(['customer', 'billing', 'level', 'idx'])
+const SKIP_PARAMS = new Set(['customer', 'billing', 'level', 'idx', 'ap2'])
 
-function encodeState(customerName, values, logIndexes, billingType, priceLevel) {
+function encodeState(customerName, values, logIndexes, billingType, priceLevel, ap2) {
   const p = new URLSearchParams()
   if (customerName) p.set('customer', customerName)
   p.set('billing', billingType)
   p.set('level', priceLevel)
+  if (ap2) p.set('ap2', '1')
   for (const [k, v] of Object.entries(values)) {
     if (v !== '' && v !== undefined && v !== null) p.set(k, String(v))
   }
@@ -76,6 +77,7 @@ function decodeParams(search) {
     customerName: p.get('customer') || '',
     billingType:  p.get('billing')  || 'annual',
     priceLevel:   p.get('level')    || 'rep',
+    ap2:          p.get('ap2') === '1',
     values,
     logIndexes,
   }
@@ -105,7 +107,7 @@ function getInitial() {
   if (fromURL) return { ...fromURL, values: migrateValues(fromURL.values) }
   const fromLS = loadLS()
   if (fromLS) return { ...fromLS, values: migrateValues(fromLS.values) }
-  return { customerName: '', billingType: 'annual', priceLevel: 'rep', values: {}, logIndexes: [{ id: 1, name: '', events: '', retention: 15 }] }
+  return { customerName: '', billingType: 'annual', priceLevel: 'rep', ap2: false, values: {}, logIndexes: [{ id: 1, name: '', events: '', retention: 15 }] }
 }
 
 // ─── Cost engine ──────────────────────────────────────────────────────────────
@@ -210,6 +212,7 @@ export default function App() {
   const [billingType, setBillingType]   = useState(init.billingType)
   const [priceLevel, setPriceLevel]     = useState(init.priceLevel)
   const [showPricing, setShowPricing]   = useState(false)
+  const [ap2, setAp2]                   = useState(init.ap2 || false)
   const [values, setValues]             = useState(init.values)
   const [logIndexes, setLogIndexes]     = useState(init.logIndexes)
   const [copied, setCopied]             = useState(false)
@@ -217,7 +220,7 @@ export default function App() {
 
   // Persist to localStorage on every change
   useEffect(() => {
-    saveLS({ customerName, billingType, priceLevel, values, logIndexes })
+    saveLS({ customerName, billingType, priceLevel, ap2, values, logIndexes })
   }, [customerName, billingType, priceLevel, values, logIndexes])
 
   // Sync page title with customer name
@@ -247,13 +250,14 @@ export default function App() {
     setCustomerName('')
     setBillingType('annual')
     setPriceLevel('rep')
+    setAp2(false)
     setValues({})
     setLogIndexes([{ id: 1, name: '', events: '', retention: 15 }])
     window.history.replaceState(null, '', window.location.pathname)
   }, [])
 
   const handleCopyLink = useCallback(() => {
-    const params = encodeState(customerName, values, logIndexes, billingType, priceLevel)
+    const params = encodeState(customerName, values, logIndexes, billingType, priceLevel, ap2)
     const url = `${window.location.origin}${window.location.pathname}?${params}`
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true)
@@ -262,10 +266,13 @@ export default function App() {
     })
   }, [customerName, values, logIndexes, billingType, priceLevel])
 
-  const costs = useMemo(
-    () => calculateCosts(values, billingType, logIndexes),
-    [values, billingType, logIndexes]
-  )
+  const costs = useMemo(() => {
+    const raw = calculateCosts(values, billingType, logIndexes)
+    if (!ap2) return raw
+    const multiplied = {}
+    for (const [k, v] of Object.entries(raw)) multiplied[k] = (v || 0) * 1.2
+    return multiplied
+  }, [values, billingType, logIndexes, ap2])
 
   const groupTotals = useMemo(() => {
     const totals = {}
@@ -288,6 +295,8 @@ export default function App() {
         onCopyLink={handleCopyLink}
         copied={copied}
         onReset={handleReset}
+        ap2={ap2}
+        onAp2Change={setAp2}
       />
       <div className="app-body">
         <main className="main-content" style={showPricing ? { paddingRight: '340px' } : undefined}>
