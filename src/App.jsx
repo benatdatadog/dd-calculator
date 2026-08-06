@@ -244,7 +244,6 @@ export default function App() {
   }, [])
 
   const handleReset = useCallback(() => {
-    if (!window.confirm('Clear all values and start fresh?')) return
     setCustomerName('')
     setBillingType('annual')
     setPriceLevel('rep')

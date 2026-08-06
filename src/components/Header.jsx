@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 
 const PURPLE = "#632CA6";
 
@@ -141,6 +141,20 @@ const Header = ({
   copied,
   onReset,
 }) => {
+  const [confirming, setConfirming] = useState(false)
+  const cancelTimer = useRef(null)
+
+  const handleResetClick = () => {
+    if (confirming) {
+      clearTimeout(cancelTimer.current)
+      setConfirming(false)
+      onReset()
+    } else {
+      setConfirming(true)
+      cancelTimer.current = setTimeout(() => setConfirming(false), 3000)
+    }
+  }
+
   return (
     <header style={styles.header}>
       <div style={styles.left}>
@@ -173,11 +187,16 @@ const Header = ({
           {showPricing ? "Hide Pricing" : "Reveal Pricing"}
         </button>
         <button
-          style={{ ...styles.revealBtn, borderColor: "rgba(255,255,255,0.5)", color: "rgba(255,255,255,0.75)" }}
-          onClick={onReset}
+          style={{
+            ...styles.revealBtn,
+            borderColor: confirming ? "#ff6b6b" : "rgba(255,255,255,0.5)",
+            color: confirming ? "#ff6b6b" : "rgba(255,255,255,0.75)",
+            transition: "border-color 0.15s, color 0.15s",
+          }}
+          onClick={handleResetClick}
           title="Clear all values and start fresh"
         >
-          Reset
+          {confirming ? "Confirm reset?" : "Reset"}
         </button>
       </div>
     </header>
