@@ -139,6 +139,7 @@ const Header = ({
   onHide,
   onCopyLink,
   copied,
+  onReset,
 }) => {
   return (
     <header style={styles.header}>
@@ -170,6 +171,13 @@ const Header = ({
         </button>
         <button style={styles.revealBtn} onClick={showPricing ? onHide : onReveal}>
           {showPricing ? "Hide Pricing" : "Reveal Pricing"}
+        </button>
+        <button
+          style={{ ...styles.revealBtn, borderColor: "rgba(255,255,255,0.5)", color: "rgba(255,255,255,0.75)" }}
+          onClick={onReset}
+          title="Clear all values and start fresh"
+        >
+          Reset
         </button>
       </div>
     </header>

@@ -243,6 +243,16 @@ export default function App() {
     setLogIndexes(prev => prev.map(r => r.id === id ? { ...r, [field]: val } : r))
   }, [])
 
+  const handleReset = useCallback(() => {
+    if (!window.confirm('Clear all values and start fresh?')) return
+    setCustomerName('')
+    setBillingType('annual')
+    setPriceLevel('rep')
+    setValues({})
+    setLogIndexes([{ id: 1, name: '', events: '', retention: 15 }])
+    window.history.replaceState(null, '', window.location.pathname)
+  }, [])
+
   const handleCopyLink = useCallback(() => {
     const params = encodeState(customerName, values, logIndexes, billingType, priceLevel)
     const url = `${window.location.origin}${window.location.pathname}?${params}`
@@ -278,6 +288,7 @@ export default function App() {
         onHide={() => setShowPricing(false)}
         onCopyLink={handleCopyLink}
         copied={copied}
+        onReset={handleReset}
       />
       <div className="app-body">
         <main className="main-content" style={showPricing ? { paddingRight: '340px' } : undefined}>
